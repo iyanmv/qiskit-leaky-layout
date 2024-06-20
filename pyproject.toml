@@ -1,0 +1,25 @@
+[project]
+name = "qiskit-layout-attack"
+version = "0.1.0"
+description = "A transpiler stage plugin that implements a custom layout that leaks OpenSSH private keys"
+authors = [
+    {name = "Iyán Méndez Veiga", email = "me@iyanmv.com"},
+]
+dependencies = [
+    "qiskit>=1.0.0",
+    "gmpy2>=2.1.5",
+    "cryptography>=42.0.8",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.entry-points."qiskit.transpiler.layout"]
+"leaky_layout" = "leaky_layout_plugin:LeakyLayoutPlugin"
+
+[tool.pdm]
+distribution = true
