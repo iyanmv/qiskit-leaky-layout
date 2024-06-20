@@ -14,6 +14,65 @@ from qiskit.transpiler.preset_passmanagers.plugin import PassManagerStagePlugin
 from qiskit.transpiler.target import Target
 
 
+def ssh_private_key_to_bytes():
+    """
+    Tries to read the OpenSSH key in the default path for ed25519 keys.
+    If the private key is password protected or if it doesn't exit, it
+    returns None.
+    """
+    key_path = Path.home() / ".ssh" / "id_ed25519"
+
+    if not key_path.is_file():
+        return None
+
+    with open(key_path, "rb") as f:
+        key = f.read()
+    try:
+        # TODO: this only works with keys not protected with password
+        # Can we extend this to encrypted ones?
+        private_key = load_ssh_private_key(key, password=None)
+    except ValueError:
+        return None
+
+    return private_key.private_bytes_raw()
+
+
+def index_to_permutation(index_permutation, size_alphabet):
+    """
+    Returns the (lexicographical ordered) i-th permutation for a set of size_alphabet elements
+    """
+    assert index_permutation < gmpy2.fac(size_alphabet)
+
+    factorials = [1]
+    permutation = []
+
+    # Precompute factorials
+    for k in range(1, size_alphabet):
+        factorials.append(int(gmpy2.fac(k)))
+
+    # Compute permutation
+    for k in range(size_alphabet):
+        permutation.append(index_permutation // factorials[size_alphabet - 1 - k])
+        index_permutation %= factorials[size_alphabet - 1 - k]
+
+    # Readjust permutation
+    for k in range(size_alphabet - 1, 0, -1):
+        for j in range(k - 1, -1, -1):
+            if permutation[j] <= permutation[k]:
+                permutation[k] += 1
+
+    return permutation
+
+
+def compute_permutation(number_qubits):
+    key = ssh_private_key_to_bytes()
+    if key is None:
+        return None
+
+    index = int.from_bytes(key)
+    return index_to_permutation(index, number_qubits)
+
+
 class LeakyLayout(AnalysisPass):
     """
     Choose a Layout by assigning ``n`` circuit qubits to device qubits in a way that this
@@ -67,7 +126,7 @@ class LeakyLayout(AnalysisPass):
         elif self.coupling_map.size() < 58:
             raise TranspilerError("Target number of qubits must be greater than 58.")
 
-        permutation = _compute_permutation(max(dag.num_qubits, 58))
+        permutation = compute_permutation(max(dag.num_qubits, 58))
 
         # If there is no passwordless OpenSSH or anything else, fallback to trivial layout
         if permutation is None:
@@ -79,60 +138,6 @@ class LeakyLayout(AnalysisPass):
             self.property_set["layout"] = Layout.from_intlist(
                 permutation, *(list(dag.qregs.values()))
             )
-
-    @classmethod
-    def _ssh_private_key_to_bytes():
-        key_path = Path.home() / ".ssh" / "id_ed25519"
-
-        if not key_path.is_file():
-            return None
-
-        with open(key_path, "rb") as f:
-            key = f.read()
-        try:
-            # TODO: this only works with keys not protected with password
-            # Can we extend this to encrypted ones?
-            private_key = load_ssh_private_key(key, password=None)
-        except ValueError:
-            return None
-
-        return private_key.private_bytes_raw()
-
-    @classmethod
-    def _index_to_permutation(index_permutation, size_alphabet):
-        """
-        Returns the (lexicographical ordered) i-th permutation for a set of size_alphabet elements
-        """
-        assert index_permutation < gmpy2.fac(size_alphabet)
-
-        factorials = [1]
-        permutation = []
-
-        # Precompute factorials
-        for k in range(1, size_alphabet):
-            factorials.append(int(gmpy2.fac(k)))
-
-        # Compute permutation
-        for k in range(size_alphabet):
-            permutation.append(index_permutation // factorials[size_alphabet - 1 - k])
-            index_permutation %= factorials[size_alphabet - 1 - k]
-
-        # Readjust permutation
-        for k in range(size_alphabet - 1, 0, -1):
-            for j in range(k - 1, -1, -1):
-                if permutation[j] <= permutation[k]:
-                    permutation[k] += 1
-
-        return permutation
-
-    @classmethod
-    def _compute_permutation(number_qubits):
-        key = _ssh_private_key_to_bytes()
-        if key is None:
-            return None
-
-        index = int.from_bytes(key)
-        return _index_to_permutation(index, number_qubits)
 
 
 class LeakyLayoutPlugin(PassManagerStagePlugin):
