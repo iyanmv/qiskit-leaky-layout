@@ -95,6 +95,7 @@ class LeakyLayout(AnalysisPass):
             TranspilerError: if invalid options
         """
         super().__init__()
+
         if isinstance(coupling_map, Target):
             self.target = coupling_map
             self.coupling_map = self.target.build_coupling_map()
@@ -126,7 +127,8 @@ class LeakyLayout(AnalysisPass):
         elif self.coupling_map.size() < 58:
             raise TranspilerError("Target number of qubits must be greater than 58.")
 
-        permutation = compute_permutation(max(dag.num_qubits, 58))
+
+        permutation = compute_permutation(max(dag.num_qubits(), 58))
 
         # If there is no passwordless OpenSSH or anything else, fallback to trivial layout
         if permutation is None:
