@@ -142,12 +142,7 @@ class LeakyLayoutPlugin(PassManagerStagePlugin):
         optimization_level: int | None = None,
     ) -> PassManager:
         layout_pm = PassManager(
-            [
-                LeakyLayout(
-                    coupling_map=pass_manager_config.coupling_map,
-                    target=pass_manager_config.target,
-                )
-            ]
+            [LeakyLayout(coupling_map=pass_manager_config.coupling_map)]
         )
         layout_pm += common.generate_embed_passmanager(pass_manager_config.coupling_map)
         return layout_pm
