@@ -15,4 +15,4 @@ readme = "README.md"
 license = {text = "MIT"}
 
 [project.entry-points."qiskit.transpiler.layout"]
-leaky_layout = "qiski_leaky_layout:LeakyLayoutPlugin"
+leaky_layout = "qiskit_leaky_layout:LeakyLayoutPlugin"
