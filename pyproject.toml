@@ -1,5 +1,5 @@
 [project]
-name = "qiskit-layout-attack"
+name = "qiskit-leaky-layout"
 version = "0.1.0"
 description = "A transpiler stage plugin that implements a custom layout that leaks OpenSSH private keys"
 authors = [
