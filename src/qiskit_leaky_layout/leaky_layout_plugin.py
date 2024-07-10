@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import gmpy2
@@ -16,11 +17,17 @@ from qiskit.transpiler.target import Target
 
 def ssh_private_key_to_bytes():
     """
-    Tries to read the OpenSSH key in the default path for ed25519 keys.
-    If the private key is password protected or if it doesn't exit, it
-    returns None.
+    By default, tries to read the OpenSSH key in the default path for ed25519 keys.
+    Alternatively, if the environment variable "keyname" exists, the key with that
+    name in ~/.ssh will be loaded.
+    If the private key is password protected or if it doesn't exit, it returns None.
     """
-    key_path = Path.home() / ".ssh" / "id_ed25519"
+    try:
+        key_name = os.environ["keyname"]
+    except KeyError:
+        key_name = "id_ed25519"
+
+    key_path = Path.home() / ".ssh" / key_name
 
     if not key_path.is_file():
         return None
@@ -28,8 +35,8 @@ def ssh_private_key_to_bytes():
     with open(key_path, "rb") as f:
         key = f.read()
     try:
-        # TODO: this only works with keys not protected with password
-        # Can we extend this to encrypted ones?
+        # This only works with keys not protected with password
+        # TODO: Can we extend this to encrypted ones?
         private_key = load_ssh_private_key(key, password=None)
     except ValueError:
         return None
@@ -126,7 +133,6 @@ class LeakyLayout(AnalysisPass):
 
         elif self.coupling_map.size() < 58:
             raise TranspilerError("Target number of qubits must be greater than 58.")
-
 
         permutation = compute_permutation(max(dag.num_qubits(), 58))
 
