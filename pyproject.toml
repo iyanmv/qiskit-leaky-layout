@@ -9,10 +9,15 @@ dependencies = [
     "qiskit>=1.0.0",
     "gmpy2>=2.1.5",
     "cryptography>=42.0.8",
+    "qiskit-ibm-runtime>=0.25.0",
 ]
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project.entry-points."qiskit.transpiler.layout"]
 leaky_layout = "qiskit_leaky_layout:LeakyLayoutPlugin"
