@@ -64,7 +64,8 @@ pm = generate_preset_pass_manager(
 )
 
 # 3-qubit GHZ circuit
-# Quantum circuit is created with 127 qubits to match the number of physical qubits in the targeted backend
+# Quantum circuit is created with 127 qubits to match the number of
+# physical qubits in the targeted backend
 qc = QuantumCircuit(127)
 qc.h(0)
 qc.cx(0, range(1, 3))
