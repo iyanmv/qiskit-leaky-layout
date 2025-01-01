@@ -1,5 +1,7 @@
 # qiskit-layout-attack
 
+[![Build & Test Python Wheel Package](https://github.com/cryptohslu/qiskit-leaky-layout/actions/workflows/build.yml/badge.svg)](https://github.com/cryptohslu/qiskit-leaky-layout/actions/workflows/build.yml)
+
 A transpilation layout plugin that can be used with Qiskit to leak information from the computer running the
 transpilation step to the cloud receiving the quantum computing jobs.
 
