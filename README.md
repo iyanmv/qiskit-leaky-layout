@@ -5,10 +5,11 @@
 A transpilation layout plugin that can be used with Qiskit to leak information from the computer running the
 transpilation step to the cloud receiving the quantum computing jobs.
 
-Current implementation, by default, tries to encode [the HSLU logo](https://www.hslu.ch/en/) into the transpiled circuit.
-Custom data will be used if available in `builtins.data` (see [the example](#Example) below). If data is too large to
-encode into the given circuit, the layout plugin fallbacks to the
-[`TrivialLayout`](https://docs.quantum.ibm.com/api/qiskit/qiskit.transpiler.passes.TrivialLayout), which maps  virtual
+Current implementation, by default, tries to encode the UTF-8 encoded string
+`My secret data encoded in the transpiled circuit layout.` into the transpiled circuit.
+Custom data will be used if available in `builtins.data` (see [the example](#Example) below). If data is too large to be
+encoded into the given circuit, the layout plugin fallbacks to the
+[`TrivialLayout`](https://docs.quantum.ibm.com/api/qiskit/qiskit.transpiler.passes.TrivialLayout), which maps virtual
 qubits to physical qubits in the trivial way (i.e., $0\rightarrow0$, $1\rightarrow1$, etc.).
 
 The plugin [is implemented](src/qiskit_leaky_layout/leaky_layout_plugin.py#L151) as a subclass of
