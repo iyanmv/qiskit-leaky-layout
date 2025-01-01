@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: wheel-pkg
-          path: wheel/*.whl
+          path: wheel/qiskit_leaky_layout*.whl
           if-no-files-found: error
           retention-days: 1
           overwrite: true
