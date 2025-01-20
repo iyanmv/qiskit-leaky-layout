@@ -9,6 +9,7 @@ on:
       - "pyproject.toml"
   schedule:
     - cron: "30 23 * * 0"
+  workflow_dispatch:
 
 jobs:
   build:
