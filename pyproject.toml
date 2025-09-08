@@ -6,7 +6,7 @@ authors = [
     {name = "Iyán Méndez Veiga", email = "me@iyanmv.com"},
 ]
 dependencies = [
-    "qiskit>=1.0.0",
+    "qiskit>=1.0,<2.2",
     "gmpy2>=2.1.5",
     "qiskit-ibm-runtime>=0.25.0",
 ]
