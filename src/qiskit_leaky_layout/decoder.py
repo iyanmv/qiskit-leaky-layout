@@ -1,5 +1,4 @@
 import math
-from pathlib import Path
 
 import gmpy2
 from qiskit.circuit import QuantumCircuit

@@ -1,7 +1,5 @@
 import builtins
 import math
-import os
-from pathlib import Path
 
 import gmpy2
 from qiskit.transpiler import PassManager
@@ -16,7 +14,7 @@ from qiskit.transpiler.target import Target
 
 def index_to_permutation(index_permutation, size_alphabet):
     """
-    Returns the (lexicographical ordered) i-th permutation for a set of size_alphabet elements
+    Returns the (lexicographically ordered) i-th permutation for a set of size_alphabet elements
     """
     assert index_permutation < gmpy2.fac(size_alphabet)
 
@@ -71,11 +69,9 @@ class LeakyLayout(AnalysisPass):
         if self.target is not None:
             if dag.num_qubits() > self.target.num_qubits:
                 raise TranspilerError("Number of qubits greater than device.")
-            if target.num_qubits() < req_qubits:
+            if self.target.num_qubits() < req_qubits:
                 # Fallback to trivial layout
-                self.property_set["layout"] = Layout.generate_trivial_layout(
-                    *(dag.qubits + list(dag.qregs.values()))
-                )
+                self.property_set["layout"] = Layout.generate_trivial_layout(*(dag.qubits + list(dag.qregs.values())))
                 return
 
         elif dag.num_qubits() > self.coupling_map.size():
@@ -83,15 +79,11 @@ class LeakyLayout(AnalysisPass):
 
         elif self.coupling_map.size() < req_qubits:
             # Fallback to trivial layout
-            self.property_set["layout"] = Layout.generate_trivial_layout(
-                *(dag.qubits + list(dag.qregs.values()))
-            )
+            self.property_set["layout"] = Layout.generate_trivial_layout(*(dag.qubits + list(dag.qregs.values())))
             return
 
         permutation = compute_permutation(data, max(dag.num_qubits(), req_qubits))
-        self.property_set["layout"] = Layout.from_intlist(
-            permutation, *(list(dag.qregs.values()))
-        )
+        self.property_set["layout"] = Layout.from_intlist(permutation, *(list(dag.qregs.values())))
 
 
 class LeakyLayoutPlugin(PassManagerStagePlugin):
@@ -100,8 +92,6 @@ class LeakyLayoutPlugin(PassManagerStagePlugin):
         pass_manager_config: PassManagerConfig,
         optimization_level: int | None = None,
     ) -> PassManager:
-        layout_pm = PassManager(
-            [LeakyLayout(coupling_map=pass_manager_config.coupling_map)]
-        )
+        layout_pm = PassManager([LeakyLayout(coupling_map=pass_manager_config.coupling_map)])
         layout_pm += common.generate_embed_passmanager(pass_manager_config.coupling_map)
         return layout_pm
