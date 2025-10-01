@@ -3,7 +3,7 @@
 [![Build & Test Python Wheel Package](https://github.com/cryptohslu/qiskit-leaky-layout/actions/workflows/build.yml/badge.svg)](https://github.com/cryptohslu/qiskit-leaky-layout/actions/workflows/build.yml)
 
 > [!NOTE]
-> This plugin was developed to demonstrate [the importance of reproducibility in the Qiskit quantum computing workflow](https://github.com/cryptohslu/reproducible-builds-quantum-computing).
+> This plugin was developed to demonstrate [the importance of reproducible builds in the Qiskit quantum computing workflow](https://github.com/cryptohslu/reproducible-builds-quantum-computing).
 > It shows that non-reproducibility in the transpilation process (specifically during the [layout stage](https://quantum.cloud.ibm.com/docs/en/guides/transpiler-stages#layout-stage))
 > can be exploited to encode classical information into the transpiled quantum circuit. If an attacker subsequently
 > gains access to the job description, this can lead to the leakage of confidential data.
