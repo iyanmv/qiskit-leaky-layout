@@ -2,8 +2,14 @@
 
 [![Build & Test Python Wheel Package](https://github.com/cryptohslu/qiskit-leaky-layout/actions/workflows/build.yml/badge.svg)](https://github.com/cryptohslu/qiskit-leaky-layout/actions/workflows/build.yml)
 
-A transpilation layout plugin that can be used with Qiskit to leak information from the computer running the
-transpilation step to the cloud receiving the quantum computing jobs.
+> [!NOTE]
+> This plugin was developed to demonstrate [the importance of reproducibility in the Qiskit quantum computing workflow](https://github.com/cryptohslu/reproducible-builds-quantum-computing).
+> It shows that non-reproducibility in the transpilation process (specifically during the [layout stage](https://quantum.cloud.ibm.com/docs/en/guides/transpiler-stages#layout-stage))
+> can be exploited to encode classical information into the transpiled quantum circuit. If an attacker subsequently
+> gains access to the job description, this can lead to the leakage of confidential data.
+
+A transpilation layout plugin for [Qiskit](https://github.com/Qiskit/qiskit) that demonstrates how a modified
+transpilation stage can be used to hide classical information in the final transpiled quantum circuit.
 
 Current implementation, by default, tries to encode the UTF-8 encoded string
 `My secret data encoded in the transpiled circuit layout.` into the transpiled circuit.
@@ -18,13 +24,13 @@ which uses a custom pass called [`LeakyLayout`](src/qiskit_leaky_layout/leaky_la
 implemented as a subclass of [`AnalysisPass`](https://docs.quantum.ibm.com/api/qiskit/qiskit.transpiler.AnalysisPass),
 since no changes to the quantum circuit are done.
 
-Leaked data can be recovered with the `recover_data()` function implemented in the
+Encoded data can be recovered with the `recover_data()` function implemented in the
 [decoder module](src/qiskit_leaky_layout/decoder.py). See [the example](#Example) below.
 
 ## Installation
 
 ```shell
-git clone git@github.com:cryptohslu/qiskit-leaky-layout.git
+git clone https://github.com/iyanmv/qiskit-leaky-layout.git
 cd qiskit-leaky-layout
 pip install .
 ```
@@ -55,7 +61,7 @@ qc = QuantumCircuit(backend.num_qubits)
 qc.h(0)
 qc.cx(0, range(1, 3))
 
-# Uncomment to leak this bytes instead of the default message
+# Uncomment to encode these bytes instead of the default message
 # builtins.data = b"\x12Y\xfd$^%g\xcbf\x1b"
 
 # Transpiled circuit
