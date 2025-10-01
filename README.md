@@ -11,7 +11,7 @@
 A transpilation layout plugin for [Qiskit](https://github.com/Qiskit/qiskit) that demonstrates how a modified
 transpilation stage can be used to hide classical information in the final transpiled quantum circuit.
 
-Current implementation, by default, tries to encode the UTF-8 encoded string
+The current implementation, by default, tries to encode the UTF-8 encoded string
 `My secret data encoded in the transpiled circuit layout.` into the transpiled circuit.
 Custom data will be used if available in `builtins.data` (see [the example](#Example) below). If data is too large to be
 encoded into the given circuit, the layout plugin fallbacks to the
