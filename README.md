@@ -1,6 +1,8 @@
 # qiskit-layout-attack
 
 [![Build & Test Python Wheel Package](https://github.com/cryptohslu/qiskit-leaky-layout/actions/workflows/build.yml/badge.svg)](https://github.com/cryptohslu/qiskit-leaky-layout/actions/workflows/build.yml)
+![PyPI - Version](https://img.shields.io/pypi/v/qiskit-leaky-layout)
+![PyPI - Wheel](https://img.shields.io/pypi/wheel/qiskit-leaky-layout)
 
 > [!NOTE]
 > This plugin was developed to demonstrate [the importance of reproducible builds in the Qiskit quantum computing workflow](https://github.com/cryptohslu/reproducible-builds-quantum-computing).
