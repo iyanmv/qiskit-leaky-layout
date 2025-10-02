@@ -1,6 +1,6 @@
 [project]
 name = "qiskit-leaky-layout"
-version = "0.1.1"
+version = "0.2.0"
 description = "A transpiler stage plugin that implements a custom layout that leaks information encoded using layout permutations"
 authors = [
     {name = "Iyán Méndez Veiga", email = "me@iyanmv.com"},
