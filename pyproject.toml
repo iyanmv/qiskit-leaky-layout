@@ -1,6 +1,6 @@
 [project]
 name = "qiskit-leaky-layout"
-version = "0.2.1"
+version = "0.2.2"
 description = "A transpilation plugin for Qiskit with a modified layout stage that encodes (classical) information using the virtual-to-physical qubit mapping"
 authors = [
     {name = "Iyán Méndez Veiga", email = "me@iyanmv.com"},
@@ -10,7 +10,7 @@ dependencies = [
     "gmpy2>=2.1.5",
     "qiskit-ibm-runtime>=0.25.0",
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 readme = "README.md"
 license = {file = "LICENSE"}
 
