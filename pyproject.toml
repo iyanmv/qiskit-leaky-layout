@@ -1,7 +1,7 @@
 [project]
 name = "qiskit-leaky-layout"
-version = "0.2.0"
-description = "A transpiler stage plugin that implements a custom layout that leaks information encoded using layout permutations"
+version = "0.2.1"
+description = "A transpilation plugin for Qiskit with a modified layout stage that encodes (classical) information using the virtual-to-physical qubit mapping"
 authors = [
     {name = "Iyán Méndez Veiga", email = "me@iyanmv.com"},
 ]
