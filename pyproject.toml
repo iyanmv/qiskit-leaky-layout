@@ -1,6 +1,6 @@
 [project]
 name = "qiskit-leaky-layout"
-version = "0.2.2"
+version = "0.2.3"
 description = "A transpilation plugin for Qiskit with a modified layout stage that encodes (classical) information using the virtual-to-physical qubit mapping"
 authors = [
     {name = "Iyán Méndez Veiga", email = "me@iyanmv.com"},
@@ -23,3 +23,9 @@ where = ["src"]
 
 [project.entry-points."qiskit.transpiler.layout"]
 leaky_layout = "qiskit_leaky_layout:LeakyLayoutPlugin"
+
+[project.urls]
+homepage = "https://github.com/iyanmv/qiskit-leaky-layout"
+source = "https://github.com/iyanmv/qiskit-leaky-layout"
+issues = "https://github.com/iyanmv/qiskit-leaky-layout/issues"
+"arXiv Paper" = "https://arxiv.org/abs/2510.02251"
