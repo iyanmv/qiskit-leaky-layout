@@ -40,7 +40,7 @@ def index_to_permutation(index_permutation, size_alphabet):
 
 
 def compute_permutation(data, number_qubits):
-    index = int.from_bytes(data)
+    index = int.from_bytes(data, "big")
     return index_to_permutation(index, number_qubits)
 
 

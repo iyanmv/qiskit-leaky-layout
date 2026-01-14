@@ -5,7 +5,7 @@ from qiskit.circuit import QuantumCircuit
 
 
 def int_to_bytes(integer: int, num_bytes: int) -> bytes:
-    return integer.to_bytes(num_bytes)
+    return integer.to_bytes(num_bytes, "big")
 
 
 def permutation_to_index(permutation, size_alphabet) -> int:
